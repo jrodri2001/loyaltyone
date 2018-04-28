@@ -24,23 +24,31 @@
 @section('scripts')
     <script language="JavaScript">
         $(document).ready(function () {
-//            When done button is pressed, send Ajax request and receive response into result div
-            $('#button').click(function (e) {
-                e.preventDefault();
-                console.log("Done button clicked");
+            //Lets validate the form
+            $('#myform').validate(
+                {
+                    rules: {
+                        text: "required",
+                    },
+                    messages:{
+                        text: "Please include a text to send"
+                    },
+                    submitHandler: function(form) {
+                        console.log("Done button clicked");
+                        //Just send an ajax request with the text on the Text input, and record response or fail into response div
+                        $.ajax({
+                            url: "/api/" + $('#text').val(),
+                            context: document.body
+                        }).done(function (data) {
+                            $('#response').html(data);
+                            $('#response').html(data);
+                        }).fail(function (data) {
+                            $('#response').html("something went wrong");
+                        });
+                    }
+                }
+            );
 
-//                Just send an ajax request with the text on the Text input, and record response or fail into response div
-                $.ajax({
-                    url: "/api/" + $('#text').val(),
-                    context: document.body
-                }).done(function (data) {
-                    $('#response').html(data);
-                    $('#response').html(data);
-                }).fail(function (data) {
-                    $('#response').html("something went wrong");
-                });
-
-            });
         });
 
     </script>
