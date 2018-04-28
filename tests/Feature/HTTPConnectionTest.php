@@ -15,7 +15,7 @@ class HTTPConnectionTest extends TestCase
     public function testHomeStatus()
     {
         $response = $this->get('/');
-
+        
         $response->assertStatus(200);
     }
 }
