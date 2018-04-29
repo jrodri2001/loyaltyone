@@ -18,6 +18,9 @@ use Illuminate\Http\Request;
 //});
 
 
-Route::get('{id}', function($text) {
-    return $text;
-});
+Route::get('submission', 'SubmissionController@index');
+Route::get('submission/{id}', 'SubmissionController@show');
+Route::get('submission/view/{id}', 'SubmissionController@view');
+Route::post('submission', 'SubmissionController@store');
+Route::put('submission/{id}', 'SubmissionController@update');
+Route::delete('submission/{id}', 'SubmissionController@delete');

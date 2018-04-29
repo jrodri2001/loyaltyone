@@ -8,7 +8,7 @@
     <form id="myform" action="">
         <div class="form-group">
             <label for="text">Text to send</label>
-            <input type="text" class="form-control" id="text" name="text" aria-describedby="textHelp" placeholder="Enter Text">
+            <input type="text" class="form-control" id="text" name="text" aria-describedby="textHelp" placeholder="Enter Text" required>
             <small id="textHelp" class="form-text text-muted">Text to send.</small>
         </div>
 
@@ -37,11 +37,21 @@
                         console.log("Done button clicked");
                         //Just send an ajax request with the text on the Text input, and record response or fail into response div
                         $.ajax({
-                            url: "/api/" + $('#text').val(),
+                            url: "/api/submission",
+                            method: "POST",
+                            data: {
+                                text: $('#text').val()
+                            },
+                            dataType: "json",
                             context: document.body
                         }).done(function (data) {
-                            $('#response').html(data);
-                            $('#response').html(data);
+                            if (data.status === "ok"){
+                                $('#response').html("Submission saved");
+                            }else{
+                                console.log(data);
+                                $('#response').html(data.status, data.message);
+                            }
+
                         }).fail(function (data) {
                             $('#response').html("something went wrong");
                         });

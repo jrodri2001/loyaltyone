@@ -21,7 +21,7 @@ class ExampleTest extends DuskTestCase
                     ->press('Done')
                     ->waitForText('testing')
                     ->with('#response', function($element){
-                        $element->assertSee('testing');
+                        $element->assertSee('Submission saved');
                     });
         });
     }

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Submission;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,12 +16,27 @@ class ApiTest extends TestCase
      */
     public function testApi()
     {
-        $text = "Test";
         
-        $response = $this->get('/api/' . $text);
+        $response = $this->get('/api/submission/');
     
+        $response->assertStatus(200);
+    }
+    
+    
+    public function testSaveSubmission(){
+        
+        $test_text = 'testing' . uniqid();
+        $response = $this->post('/api/submission', ['text'=>$test_text]);
         $response
             ->assertStatus(200)
-            ->assertSeeText($text);
+            ->assertJson(['status'=>"ok"]);
+        
+        $this->assertDatabaseHas('submissions', [
+            'text' => $test_text
+        ]);
+        
+        //delete the test record
+        $s = Submission::where('text', '=', $test_text)->delete();
+        
     }
 }
