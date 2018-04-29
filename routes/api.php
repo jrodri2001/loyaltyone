@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 Route::get('submission', 'SubmissionController@index');
 Route::get('submission/{id}', 'SubmissionController@show');
 Route::get('submission/view/{id}', 'SubmissionController@view');
+Route::get('submission/username/{user}', 'SubmissionController@indexByUser');
 Route::post('submission', 'SubmissionController@store');
 Route::put('submission/{id}', 'SubmissionController@update');
 Route::delete('submission/{id}', 'SubmissionController@delete');

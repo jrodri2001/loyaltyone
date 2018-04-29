@@ -12,5 +12,6 @@
 */
 
 Route::get('/', function () {
+    //get all the Submissions
     return view('home');
 });
