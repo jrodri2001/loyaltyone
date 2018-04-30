@@ -72,6 +72,11 @@ class SubmissionController extends Controller
         return 204;
     }
     
+    public function deleteAll(){
+        Submission::truncate();
+        return $this->sendResponse('ok', 'All submissions deleted');
+    }
+    
     private function sendResponse($status, $message = null, $data = null)
     {
         $response = [
@@ -88,4 +93,6 @@ class SubmissionController extends Controller
         
         return json_encode($response);
     }
+    
+    
 }

@@ -7,7 +7,7 @@
 
 require('./bootstrap');
 require('jquery');
-require('jquery-validation')
+require('jquery-validation');
 
 // window.Vue = require('jquery');
 

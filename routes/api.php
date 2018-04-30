@@ -22,6 +22,7 @@ Route::get('submission', 'SubmissionController@index');
 Route::get('submission/{id}', 'SubmissionController@show');
 Route::get('submission/view/{id}', 'SubmissionController@view');
 Route::get('submission/username/{user}', 'SubmissionController@indexByUser');
+Route::get('submission/delete/all', 'SubmissionController@deleteAll');
 Route::post('submission', 'SubmissionController@store');
 Route::put('submission/{id}', 'SubmissionController@update');
 Route::delete('submission/{id}', 'SubmissionController@delete');

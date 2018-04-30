@@ -160,6 +160,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*Handlebar support*/
+        ProAI\Handlebars\HandlebarsServiceProvider::class,
     ],
 
     /*

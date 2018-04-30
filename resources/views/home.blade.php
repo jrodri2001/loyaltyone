@@ -45,12 +45,26 @@
 @endsection
 
 @section('scripts')
+
+    <script id="submission-template" type="text/x-handlebars-template">
+        <div class="card">
+            <div class="card-body">
+                @{{ text }}
+            </div>
+        </div>
+    </script>
+
     <script language="JavaScript">
+        var source   = $("#submission-template").html();
+        var templateScript = Handlebars.compile(source);
 
         function updateSubmissions(data) {
+
             $('#userSubmissions').empty();
             for (var i = 0; i < data.length; i++) {
-                $('#userSubmissions').append('<div class="card"><div class="card-body">' + data[i].text + '</div></div>');
+//                $('#userSubmissions').append('<div class="card"><div class="card-body">' + data[i].text + '</div></div>');
+                var html = templateScript({'text': data[i].text});
+                $('#userSubmissions').append(html);
             }
         }
 
@@ -67,7 +81,6 @@
                         username: "Please include your username"
                     },
                     submitHandler: function (form) {
-                        console.log("Done button clicked");
                         //Just send an ajax request with the text on the Text input, and record response or fail into response div
                         $.ajax({
                             url: "/api/submission",
@@ -99,4 +112,6 @@
         });
 
     </script>
+
+
 @endsection
