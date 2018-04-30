@@ -24,5 +24,6 @@ Route::get('submission/view/{id}', 'SubmissionController@view');
 Route::get('submission/username/{user}', 'SubmissionController@indexByUser');
 Route::get('submission/delete/all', 'SubmissionController@deleteAll');
 Route::post('submission', 'SubmissionController@store');
+Route::post('submission/reply/{id}', 'SubmissionController@reply');
 Route::put('submission/{id}', 'SubmissionController@update');
 Route::delete('submission/{id}', 'SubmissionController@delete');

@@ -73,9 +73,30 @@ class ApiTest extends TestCase
         $response = $this->get('/api/submission');
         
         //count DB submissions
-        $count = Submission::all()->count();
+        $count = Submission::where('parent','=',0)->count();
         
         //Assert count
         $response->assertJsonCount($count);
+        
+        //Make sure it contains all_replies
+        $response->assertJsonFragment(['all_replies']);
+    }
+    
+    
+    
+    public function testGetSubmissionReplies(){
+        //get 1 submission
+        $submission = Submission::all()->first();
+        
+        if (!$submission){
+            $submission = factory(Submission::class)->create();
+        }
+        
+        //get all the current submissions
+        $response = $this->get('/api/submission/' . $submission->id);
+        
+        $response->assertJsonFragment(['all_replies']);
+        
+        $submission->delete();
     }
 }

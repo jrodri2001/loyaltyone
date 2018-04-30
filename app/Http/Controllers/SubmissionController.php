@@ -15,7 +15,8 @@ class SubmissionController extends Controller
     
     public function index()
     {
-        return Submission::all();
+        //return all submissions
+        return Submission::with('allReplies')->where('parent','=', 0)->orderBy('created_at', 'desc')->get();
     }
     
     public function indexByUser(Request $request, $username){
@@ -24,7 +25,15 @@ class SubmissionController extends Controller
     
     public function show($id)
     {
-        return Submission::find($id);
+        $submission = Submission::with([
+            'replies',
+            'allReplies'
+        ])->findOrFail($id);
+        
+        //$children = $submission->retries;
+        
+        
+        return $submission;
     }
     
     
@@ -75,6 +84,22 @@ class SubmissionController extends Controller
     public function deleteAll(){
         Submission::truncate();
         return $this->sendResponse('ok', 'All submissions deleted');
+    }
+    
+    
+    public function reply(Request $request, $id){
+        $this->validate($request, [
+            'text' => "required",
+            'username' => "required",
+        ]);
+        
+        $submission = Submission::find($id);
+        $submission->replies()->create([
+            'text'=>$request->input('text'),
+            'username'=>$request->input('text'),
+        ]);
+    
+        return $this->sendResponse('ok', 'A reply has been recorded');
     }
     
     private function sendResponse($status, $message = null, $data = null)
